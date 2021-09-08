@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/filwebproj/.idea/filwebproj.iml" filepath="$USER_HOME$/filwebproj/.idea/filwebproj.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/okex-python-sdk-api.iml" filepath="$PROJECT_DIR$/.idea/okex-python-sdk-api.iml" />
     </modules>
   </component>

@@ -18,56 +18,39 @@ def get_timestamp():
 
 time = get_timestamp()
 
-if __name__ == '__main__':
+class Kline:
+    def __init__(self, instrument,time,open,high,low, close,volume):
+        self.instrument=instrument
+        self.time = time
+        self.open = float(open)
+        self.high = float(high)
+        self.low = float(low)
+        self.close = float(close)
+        self.volume = float(volume)
 
-    api_key = ""
-    secret_key = ""
-    passphrase = ""
+def getKlines(instrument,result):
+    klist = []
+    for r in result:
+        newk = Kline(instrument, r[0], r[1], r[2], r[3], r[4], r[5])
+        klist.append(newk)
+    return klist
+
+if __name__ == '__main__':
+    api_key = "b7b1a93f-d755-43da-ac0d-959c634c33e1"
+    secret_key = "930E90315C45C4C7224D070B7FD52CB0"
+    passphrase = "fil584414"
 
     # param use_server_time's value is False if is True will use server timestamp
     # param test's value is False if is True will use simulative trading
 
-# account api test
-# 资金账户API
-    accountAPI = account.AccountAPI(api_key, secret_key, passphrase, False)
-    # 资金账户信息
-    # result = accountAPI.get_wallet()
-    # 单一币种账户信息
-    # result = accountAPI.get_currency('')
-    # 资金划转
-    # result = accountAPI.coin_transfer(currency='', amount='', account_from='', account_to='', type='',to_instrument_id='')
-    # 资金划转状态查询
-    # result = accountAPI.get_state(transfer_id='')
-    # 提币
-    result = accountAPI.coin_withdraw(currency='', amount='', destination='', to_address='', trade_pwd='', fee='',chain='')
-    # 账单流水查询
-    # result = accountAPI.get_ledger_record(currency='', after='', before='', limit='', type='')
-    # 获取充值地址
-    # result = accountAPI.get_top_up_address('')
-    # 获取账户资产估值
-    # result = accountAPI.get_asset_valuation(account_type='', valuation_currency='')
-    # 获取子账户余额信息
-    # result = accountAPI.get_sub_account('')
-    # 查询所有币种的提币记录
-    # result = accountAPI.get_coins_withdraw_record()
-    # 查询单个币种提币记录
-    # result = accountAPI.get_coin_withdraw_record('')
-    # 获取所有币种充值记录
-    # result = accountAPI.get_top_up_records()
-    # 获取单个币种充值记录
-    # result = accountAPI.get_top_up_record(currency='', after='', before='', limit='')
-    # 获取币种列表
-    # result = accountAPI.get_currencies()
-    # 提币手续费
-    # result = accountAPI.get_coin_fee('')
-    # 获取用户ID
-    # result = accountAPI.get_uid('')
-    # 余币宝申购赎回
-    # result = accountAPI.purchase_redempt(currency='',amount='',side='')
 
 # spot api test
 # 币币API
     spotAPI = spot.SpotAPI(api_key, secret_key, passphrase, False)
+    # 公共-获取K线数据q
+    result = spotAPI.get_kline(instrument_id='BTC-USDT', start='2021-09-01T00:00:00.000Z', end='2021-09-07T00:00:00.000Z', granularity='86400')
+    klines = getKlines('BTC-USDT',result)
+    print(k.__dict__ for k in klines)
     # 币币账户信息
     # result = spotAPI.get_account_info()
     # 单一币种账户信息
@@ -121,14 +104,52 @@ if __name__ == '__main__':
     # result = spotAPI.get_specific_ticker('')
     # 公共-获取成交数据
     # result = spotAPI.get_deal(instrument_id='', limit='')
-    # 公共-获取K线数据q
-    # result = spotAPI.get_kline(instrument_id='', start='', end='', granularity='')
     # 公共-获取历史K线数据
     # result = spotAPI.get_history_kline(instrument_id='')
 
+
+# account api test
+# 资金账户API
+    #accountAPI = account.AccountAPI(api_key, secret_key, passphrase, False)
+    # 资金账户信息
+    # result = accountAPI.get_wallet()
+    # 单一币种账户信息
+    # result = accountAPI.get_currency('')
+    # 资金划转
+    # result = accountAPI.coin_transfer(currency='', amount='', account_from='', account_to='', type='',to_instrument_id='')
+    # 资金划转状态查询
+    # result = accountAPI.get_state(transfer_id='')
+    # 提币
+    #result = accountAPI.coin_withdraw(currency='', amount='', destination='', to_address='', trade_pwd='', fee='',chain='')
+    # 账单流水查询
+    # result = accountAPI.get_ledger_record(currency='', after='', before='', limit='', type='')
+    # 获取充值地址
+    # result = accountAPI.get_top_up_address('')
+    # 获取账户资产估值
+    # result = accountAPI.get_asset_valuation(account_type='', valuation_currency='')
+    # 获取子账户余额信息
+    # result = accountAPI.get_sub_account('')
+    # 查询所有币种的提币记录
+    # result = accountAPI.get_coins_withdraw_record()
+    # 查询单个币种提币记录
+    # result = accountAPI.get_coin_withdraw_record('')
+    # 获取所有币种充值记录
+    # result = accountAPI.get_top_up_records()
+    # 获取单个币种充值记录
+    # result = accountAPI.get_top_up_record(currency='', after='', before='', limit='')
+    # 获取币种列表
+    # result = accountAPI.get_currencies()
+    # 提币手续费
+    # result = accountAPI.get_coin_fee('')
+    # 获取用户ID
+    # result = accountAPI.get_uid('')
+    # 余币宝申购赎回
+    # result = accountAPI.purchase_redempt(currency='',amount='',side='')
+
+
 # level api test
 # 币币杠杆API
-    levelAPI = lever.LeverAPI(api_key, secret_key, passphrase, False)
+    #levelAPI = lever.LeverAPI(api_key, secret_key, passphrase, False)
     # 币币杠杆账户信息
     # result = levelAPI.get_account_info()
     # 单一币对账户信息
@@ -187,7 +208,7 @@ if __name__ == '__main__':
 
 # future api test
 # 交割合约API
-    futureAPI = future.FutureAPI(api_key, secret_key, passphrase, False)
+    #futureAPI = future.FutureAPI(api_key, secret_key, passphrase, False)
     # 所有合约持仓信息
     # result = futureAPI.get_position()
     # 单个合约持仓信息
@@ -282,7 +303,7 @@ if __name__ == '__main__':
 
 # swap api test
 # 永续合约API
-    swapAPI = swap.SwapAPI(api_key, secret_key, passphrase, False)
+    #swapAPI = swap.SwapAPI(api_key, secret_key, passphrase, False)
     # 所有合约持仓信息
     # result = swapAPI.get_position()
     # 单个合约持仓信息
@@ -368,7 +389,7 @@ if __name__ == '__main__':
 
 # option api test
 # 期权合约API
-    optionAPI = option.OptionAPI(api_key, secret_key, passphrase, False)
+    #optionAPI = option.OptionAPI(api_key, secret_key, passphrase, False)
     # 单个标的指数持仓信息
     # result = optionAPI.get_specific_position(underlying='', instrument_id='')
     # 单个标的物账户信息
@@ -426,7 +447,7 @@ if __name__ == '__main__':
 
 # information api test
 # 合约交易数据API
-    informationAPI = information.InformationAPI(api_key, secret_key, passphrase, False)
+    #informationAPI = information.InformationAPI(api_key, secret_key, passphrase, False)
     # 公共-多空持仓人数比
     # result = informationAPI.get_long_short_ratio(currency='',start='',end='',granularity='')
     # 公共-持仓总量及交易量
@@ -440,19 +461,19 @@ if __name__ == '__main__':
 
 # index api test
 # 指数API
-    indexAPI = index.IndexAPI(api_key, secret_key, passphrase, False)
+    #indexAPI = index.IndexAPI(api_key, secret_key, passphrase, False)
     # 公共-获取指数成分
     # result = indexAPI.get_index_constituents('')
 
 # system api test
 # 获取系统升级状态
-    system = system.SystemAPI(api_key, secret_key, passphrase, False)
+    #system = system.SystemAPI(api_key, secret_key, passphrase, False)
     # 公共-获取系统升级状态
-    result = system.get_system_status('')
+    #result = system.get_system_status('')
 
 #oracle
 #公共-Oracle
-    oracle = oracle.OracleAPI(api_key, secret_key, passphrase, False)
+    #oracle = oracle.OracleAPI(api_key, secret_key, passphrase, False)
     # result = oracle.oracle()
 
-    print(time + json.dumps(result))
+    #print(time + json.dumps(result))
